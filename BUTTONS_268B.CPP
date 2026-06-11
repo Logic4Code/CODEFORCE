@@ -9,5 +9,5 @@ int main()
     for (int i = n; i >= 1; --i) {
         ans += (i - 1) * (n - i) + i;
     }  
-    cout << ans ;
+    cout << ans;
 }
