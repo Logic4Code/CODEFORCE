@@ -7,23 +7,54 @@ int main() {
     int t;
     cin >> t;
     while (t--) {
-  int n;
-    cin >> n;
-    vector<int> A(n), B(n);
-    for (int i = 0; i < n; i++) cin >> A[i];
-    for (int i = 0; i < n; i++) cin >> B[i];
-bool ans=true;
+     int n;
+     cin>>n;
+     string s;
+      cin>>s;
+vector<int> a(10, 0);
+    for (char c : s) {
+        a[c - '0']++;
+    }
 
-    if (A[n - 1] != B[n - 1]) {
-        ans= false;
-    }
-    for (int i = n - 2; i >= 0; i--) {
-        if (A[i] != B[i] && (A[i] ^ A[i + 1]) != B[i] && (A[i] ^ B[i + 1]) != B[i]) {
-        ans= false;
-        break;
+    int ans = 0;
+
+    while (true) {
+        int c01 = a[0] + a[1];
+        if (c01 < 2) {
+            break; 
         }
+        
+        for (int i = 0; i < 2; i++) {
+            if (a[1] > 0) a[1]--;
+            else a[0]--;
+        }
+        bool v = false;
+        for (int d = 5; d >= 0; d--) {
+            if (a[d] > 0) {
+                a[d]--;
+                v = true;
+                break;
+            }
+        }
+        if (!v) {
+            break; 
+        }
+
+        bool u = false;
+        for (int d = 9; d >= 0; d--) {
+            if (a[d] > 0) {
+                a[d]--;
+                u = true;
+                break;
+            }
+        }
+        if (!u) {
+            break; 
+        }
+
+        ans++;
     }
-    if(ans)cout<<"YES"<<endl;
-    else cout<<"NO"<<endl;
+
+    cout << ans << "\n";
 }
 }
