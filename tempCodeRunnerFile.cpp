@@ -1,60 +1,66 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+map<int, int> c;
+vector<int>b;
+int pow(int o){
+    int num=1;
+    for (int i = 0; i < o; i++)
+    {
+       num*=2;
+    }
+    return num;
+}
+int main()
+{
     int t;
     cin >> t;
-    while (t--) {
-     int n;
-     cin>>n;
-     string s;
-      cin>>s;
-vector<int> a(10, 0);
-    for (char c : s) {
-        a[c - '0']++;
-    }
-
-    int ans = 0;
-
-    while (true) {
-        int c01 = a[0] + a[1];
-        if (c01 < 2) {
-            break; 
+    while (t--)
+    {
+        int n;
+        cin >> n;
+        int r = 0;
+        for (int i = 1; i <= n; i++)
+        {
+            r = r ^ i;
         }
-        
-        for (int i = 0; i < 2; i++) {
-            if (a[1] > 0) a[1]--;
-            else a[0]--;
+        vector<int> a(32, 0);
+        for (int i = 1; i <= n; i++)
+        {
+            int y = i;
+            for (int j = 0; j < 32; j++)
+            {
+                if (y % 2 == 1)a[j]++;
+                y = y / 2;
+            }
         }
-        bool v = false;
-        for (int d = 5; d >= 0; d--) {
-            if (a[d] > 0) {
-                a[d]--;
-                v = true;
+        int h = -1;
+        for (int i = 31; i>=0; i--)
+        {
+            if (a[i] > 0)
+            {
+                h = i;
                 break;
             }
         }
-        if (!v) {
-            break; 
+        for (int i = h + 1; i >= 1; i--)
+        {
+            if (a[i] % 2 == 0)
+            {
+                b.push_back(i-1);
+                a[i]++;
+                a[i - 1]--;
+            }  
         }
-
-        bool u = false;
-        for (int d = 9; d >= 0; d--) {
-            if (a[d] > 0) {
-                a[d]--;
-                u = true;
-                break;
-            }
-        }
-        if (!u) {
-            break; 
-        }
-
-        ans++;
+     for (int i=0;i<b.size();i++)
+     {
+        int p=b[i];
+        c[pow(p)]=1; 
+     }
+     for (int i = 1; i <=n; i++)
+     {
+       if(c[i]==1) cout<<1<<" ";
+       else cout<<0<<" ";
+     }
+     cout<<endl;
     }
-
-    cout << ans << "\n";
-}
 }
